@@ -31,15 +31,24 @@ int main()
 		p_pilha segundaPilha = create_pilha();
 		if(primeiroValor >= 0) {
 			empilhar(segundaPilha, primeiroValor);
-			for (int i = 1; i <= numberOfDigits - 1; i = i + 1) {
+			for (int i = 2; i <= numberOfDigits; ) {
 				int proximoValor = desempilhar(pilha);
-				int valorSalvo = desempilhar(segundaPilha);
-				if (proximoValor > valorSalvo) {
-					digitosRemovidos += 1;
-					empilhar(segundaPilha, proximoValor);
-				} else {
-					empilhar(segundaPilha, valorSalvo);
-					empilhar(segundaPilha, proximoValor);
+				int continuaDesempilhando = 1;
+				while (continuaDesempilhando) {
+					int valorSalvo = desempilhar(segundaPilha);
+					if (valorSalvo == - 1) {//pilha vazia
+						break;
+					}
+					if (proximoValor > valorSalvo) {
+						digitosRemovidos += 1;
+						empilhar(segundaPilha, proximoValor);
+						i = i + 1;
+					} else {
+						continuaDesempilhando = 0;
+						empilhar(segundaPilha, valorSalvo);
+						empilhar(segundaPilha, proximoValor);
+						i = i + 1;
+					}
 				}
 			}
 			if (digitosRemovidos != n) {
